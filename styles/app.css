@@ -1,0 +1,16 @@
+.app {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  background: url('../../assets/images/background.webp') no-repeat bottom center;
+  background-color: var(--skyblue);
+}
+
+.app__grass {
+  width: 100%;
+  height: 250px;
+  position: absolute;
+  bottom: 0;
+  z-index: 10;
+  background: url('../../assets/images/grass.webp') no-repeat bottom center;
+}
