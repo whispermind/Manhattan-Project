@@ -1,0 +1,34 @@
+.fall-animation {
+  height: var(--nav-containers-height);
+  transition: transform 2s ease;
+  transform: translateY(-150vh);
+  animation: 2s ease forwards fall;
+}
+
+.fall-back-animation {
+  animation: 2s ease forwards fall-back;
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-150vh);
+  }
+
+  50% {
+    transform: translateY(50vh);
+  }
+
+  100% {
+    transform: translateY(calc(50vh - var(--nav-containers-height)));
+  }
+}
+
+@keyframes fall-back {
+  from {
+    transform: translateY(calc(50vh - var(--nav-containers-height)));
+  }
+
+  100% {
+    transform: translateY(-150vh);
+  }
+}

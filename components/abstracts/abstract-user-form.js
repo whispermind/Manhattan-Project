@@ -1,16 +1,18 @@
 import Renderable from "./renderable.js";
-import inputsFactory from "../../utils/inputsFactory.js";
+import inputsFactory from "../../utils/inputs-factory.js";
 
 class AbstractUserForm extends Renderable {
-  constructor(container) {
+  constructor() {
     const form = document.createElement("form");
     super(form);
     if (this.constructor === AbstractUserForm) {
       throw new Error("Cant create the instance of abstract class");
     }
 
-    this.form = form;
-    this.form.classList.add("form");
+    this.componentContainer = form;
+    this.componentContainer.classList.add("form");
+    this.formHeader = document.createElement("h2");
+    this.formHeader.textContent = "Form";
     this.emailInput = inputsFactory({
       type: "email",
       name: "email",
@@ -25,7 +27,7 @@ class AbstractUserForm extends Renderable {
       maxlength: 16,
       required: true,
     });
-    this.submitInput = inputsFactory({ type: "submit", value: "Login" });
+    this.submitInput = inputsFactory({ type: "submit", value: "Submit" });
   }
 
   onSubmit() {

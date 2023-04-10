@@ -1,9 +1,19 @@
 class Renderable {
-  constructor(container) {
+  _componentContainer = null;
+
+  constructor(thisContainer) {
     if (this.constructor === Renderable) {
       throw new Error("Cant create the instance of abstract class");
     }
-    this.container = container;
+    this.thisContainer = thisContainer;
+  }
+
+  get componentContainer() {
+    return this._componentContainer;
+  }
+
+  set componentContainer(container) {
+    return (this._componentContainer = container);
   }
 
   render() {
@@ -11,11 +21,16 @@ class Renderable {
   }
 
   show() {
-    this.container.setAttribute("display", "none");
+    if (!this.parent) return;
+    this.parent.append(this);
   }
 
   hide() {
-    this.container.setAttribute("display", "none");
+    if (!this.thisContainer.parent) return;
+    if (!this.parent) {
+      this.parent = this.thisContainer.parent;
+    }
+    this.thisContainer.remove();
   }
 }
 

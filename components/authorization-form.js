@@ -1,13 +1,29 @@
 import AbstractUserForm from "./abstracts/abstract-user-form.js";
+import isElement from "../utils/is-html-element.js";
 import { mainStorage } from "../index.js";
 
 class AuthForm extends AbstractUserForm {
-  formClasses = ["form_auth"];
+  formHeadingText = "Authorization";
 
-  constructor(container) {
+  constructor(renderContainer) {
+    if (!renderContainer || !isElement(renderContainer)) {
+      throw new Error("Container arugment must be an HTML Element");
+    }
     super();
-    this.container = container;
-    this.form.classList.add(...this.formClasses);
+    this.renderContainer = renderContainer;
+    this.formHeader.textContent = this.formHeadingText;
+    this.componentContainer.classList.add("form_auth");
+    this.componentContainer.append(
+      this.formHeader,
+      this.emailInput,
+      this.passwordInput,
+      this.submitInput
+    );
+    this.componentContainer.addEventListener(
+      "submit",
+      this.onSubmit.bind(this)
+    );
+    this.render = this.render.bind(this);
   }
 
   async onSubmit(e) {
@@ -27,9 +43,7 @@ class AuthForm extends AbstractUserForm {
   }
 
   render() {
-    this.form.addEventListener("submit", this.onSubmit.bind(this));
-    this.form.append(this.emailInput, this.passwordInput, this.submitInput);
-    this.container.append(this.form);
+    this.renderContainer.append(this.componentContainer);
   }
 }
 

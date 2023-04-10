@@ -1,18 +1,25 @@
 import RegistrationForm from "./registration-form.js";
 import AuthForm from "./authorization-form.js";
+import Renderable from "./abstracts/renderable.js";
+import FallAnimated from "./fall-animated.js";
 
-class App {
-  constructor(container) {
-    const grassContainer = document.createElement("div");
-    grassContainer.classList.add("app__grass");
-    this.container = container;
-    this.container.append(grassContainer);
-    this.authForm = new AuthForm(container);
-    this.registrationForm = new AuthForm(container);
+class App extends Renderable {
+  grassOverlay = document.createElement("div");
+
+  constructor(renderContainer) {
+    super(renderContainer);
+    this.componentContainer = renderContainer;
+    this.renderContainer = renderContainer;
+    this.grassOverlay.classList.add("app__grass-overlay");
+    this.componentContainer.append(this.grassOverlay);
+    this.authForm = new FallAnimated(new AuthForm(this.componentContainer));
+    this.registrationForm = new FallAnimated(
+      new RegistrationForm(this.componentContainer)
+    );
   }
 
   render() {
-    this.registrationForm.render();
+    this.authForm.render();
   }
 }
 

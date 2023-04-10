@@ -1,13 +1,18 @@
 import AbstractUserForm from "./abstracts/abstract-user-form.js";
-import inputsFactory from "../utils/inputsFactory.js";
+import inputsFactory from "../utils/inputs-factory.js";
+import isElement from "../utils/is-html-element.js";
 import { mainStorage } from "../index.js";
 
 class RegistrationForm extends AbstractUserForm {
-  formClasses = ["form_registration"];
+  formHeadingText = "Registration";
+  
 
-  constructor(container) {
-    super(container);
-    this.container = container;
+  constructor(renderContainer) {
+    if (!renderContainer || !isElement(renderContainer)) {
+      throw new Error("Container arugment must be an HTML Element");
+    }
+    super();
+    this.renderContainer = renderContainer;
     this.nameInput = inputsFactory({
       type: "text",
       required: true,
@@ -16,7 +21,20 @@ class RegistrationForm extends AbstractUserForm {
       minlength: 4,
       maxlength: 16,
     });
-    this.form.classList.add(...this.formClasses);
+    this.formHeader.textContent = this.formHeadingText;
+    this.componentContainer.classList.add("form_registration");
+    this.componentContainer.append(
+      this.formHeader,
+      this.nameInput,
+      this.emailInput,
+      this.passwordInput,
+      this.submitInput
+    );
+    this.componentContainer.addEventListener(
+      "submit",
+      this.onSubmit.bind(this)
+    );
+    this.render = this.render.bind(this);
   }
 
   async onSubmit(e) {
@@ -31,14 +49,7 @@ class RegistrationForm extends AbstractUserForm {
   }
 
   render() {
-    this.form.addEventListener("submit", this.onSubmit.bind(this));
-    this.form.append(
-      this.nameInput,
-      this.emailInput,
-      this.passwordInput,
-      this.submitInput
-    );
-    this.container.append(this.form);
+    this.renderContainer.append(this.componentContainer);
   }
 }
 

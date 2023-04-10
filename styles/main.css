@@ -1,7 +1,7 @@
 @import "./vars.css";
 @import "./app.css";
 @import "./forms.css";
-
+@import "./animation.css";
 
 * {
   box-sizing: border-box;
@@ -9,7 +9,13 @@
   font-family: 'Londrina Solid', cursive;
 }
 
-body {
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
 }
 
