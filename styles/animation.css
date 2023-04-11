@@ -1,12 +1,11 @@
 .fall-animation {
   height: var(--nav-containers-height);
-  transition: transform 2s ease;
   transform: translateY(-150vh);
-  animation: 2s ease forwards fall;
+  animation: 1s ease forwards fall;
 }
 
 .fall-back-animation {
-  animation: 2s ease forwards fall-back;
+  animation: 0.5s ease forwards fall-back;
 }
 
 @keyframes fall {

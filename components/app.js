@@ -1,25 +1,39 @@
-import RegistrationForm from "./registration-form.js";
-import AuthForm from "./authorization-form.js";
 import Renderable from "./abstracts/renderable.js";
-import FallAnimated from "./fall-animated.js";
+import navButton from "./nav-button.js";
 
 class App extends Renderable {
-  grassOverlay = document.createElement("div");
-
+  static instance = null;
   constructor(renderContainer) {
+    if (App.instance) {
+      throw new Error(
+        "Not possible to create the second instance of singleton class"
+      );
+    }
+
     super(renderContainer);
+
+    App.instance = this;
     this.componentContainer = renderContainer;
     this.renderContainer = renderContainer;
-    this.grassOverlay.classList.add("app__grass-overlay");
+
+    this.#setLayout();
+    this.#setAttributes();
+
+    this.navButton = new navButton(this.componentContainer);
+
     this.componentContainer.append(this.grassOverlay);
-    this.authForm = new FallAnimated(new AuthForm(this.componentContainer));
-    this.registrationForm = new FallAnimated(
-      new RegistrationForm(this.componentContainer)
-    );
+  }
+
+  #setLayout() {
+    this.grassOverlay = document.createElement("div");
+  }
+
+  #setAttributes() {
+    this.grassOverlay.classList.add("app__grass-overlay");
   }
 
   render() {
-    this.authForm.render();
+    this.navButton.render();
   }
 }
 

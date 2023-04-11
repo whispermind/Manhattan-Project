@@ -1,0 +1,9 @@
+.navigation {
+  width: var(--navs-containers-width);
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  left: calc(50vw - var(--navs-containers-width) / 2);
+}

@@ -1,32 +1,58 @@
 import AbstractUserForm from "./abstracts/abstract-user-form.js";
 import isElement from "../utils/is-html-element.js";
+import Navigation from "./navigation.js";
 import { mainStorage } from "../index.js";
 
 class AuthForm extends AbstractUserForm {
   formHeadingText = "Authorization";
+  static instance = null;
 
   constructor(renderContainer) {
+    if (AuthForm.instance) {
+      throw new Error(
+        "Not possible to create the second instance of singleton class"
+      );
+    }
+
     if (!renderContainer || !isElement(renderContainer)) {
       throw new Error("Container arugment must be an HTML Element");
     }
+
     super();
+
+    AuthForm.instance = this;
     this.renderContainer = renderContainer;
-    this.formHeader.textContent = this.formHeadingText;
-    this.componentContainer.classList.add("form_auth");
+
+    this.#setAttributes();
+    this.#setContent();
+
     this.componentContainer.append(
       this.formHeader,
       this.emailInput,
       this.passwordInput,
+      this.closeButton,
       this.submitInput
     );
-    this.componentContainer.addEventListener(
-      "submit",
-      this.onSubmit.bind(this)
-    );
-    this.render = this.render.bind(this);
+
+    this.#setListeners();
   }
 
-  async onSubmit(e) {
+  #setAttributes() {
+    this.componentContainer.classList.add("form_auth");
+  }
+
+  #setListeners() {
+    this.componentContainer.addEventListener(
+      "submit",
+      this.#onSubmit.bind(this)
+    );
+  }
+
+  #setContent() {
+    this.formHeader.textContent = this.formHeadingText;
+  }
+
+  async #onSubmit(e) {
     e.preventDefault();
     const [email, password] = e.target.elements;
     try {
@@ -40,6 +66,9 @@ class AuthForm extends AbstractUserForm {
     } catch (err) {
       //unreachable w/o api
     }
+    Navigation.instance.animatedAuthForm.hide(() =>
+      Navigation.instance.render()
+    );
   }
 
   render() {

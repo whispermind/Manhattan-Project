@@ -1,0 +1,19 @@
+.close-button {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: url('../assets/icons/close-icon.png');
+  background-size: cover;
+}
+
+.nav-button {
+  width: 250px;
+  height: 250px;
+  position: absolute;
+  bottom: 150px;
+  left: 30px;
+  background: url('../assets/icons/nav-icon.png');
+  background-size: cover;
+}

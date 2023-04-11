@@ -1,6 +1,8 @@
 @import "./vars.css";
 @import "./app.css";
+@import "./buttons.css";
 @import "./forms.css";
+@import "./navigation.css";
 @import "./animation.css";
 
 * {
@@ -19,6 +21,16 @@ h6 {
   margin: 0;
 }
 
-.hidden {
-  display: none;
+input,
+button {
+  width: 100%;
+  border-radius: 5px;
+  background-color: white;
+  text-align: center;
+  border: none;
+  text-transform: capitalize;
+}
+
+button {
+  cursor: pointer;
 }
