@@ -9,7 +9,7 @@ class NavButton extends Renderable {
   constructor(renderContainer) {
     if (NavButton.instance) {
       throw new Error(
-        "Not possible to create the second instance of singleton class"
+        "Impossible to to create the second instance of singleton class"
       );
     }
 
@@ -32,12 +32,9 @@ class NavButton extends Renderable {
   }
 
   #setListeners() {
-    const onClickBinded = this.#onClick.bind(this);
-    this.navContainer.componentContainer.addEventListener(
-      "click",
-      onClickBinded
-    );
-    this.componentContainer.addEventListener("click", onClickBinded);
+    const binded = this.#onClick.bind(this);
+    this.navContainer.componentContainer.addEventListener("click", binded);
+    this.componentContainer.addEventListener("click", binded);
   }
 
   #onClick(e) {

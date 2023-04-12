@@ -3,6 +3,7 @@ import AuthForm from "./authorization-form.js";
 import RegistrationForm from "./registration-form.js";
 import FallAnimated from "./fall-animated.js";
 import NavButton from "./nav-button.js";
+import Game from "./game.js";
 
 class Navigation extends Renderable {
   static instance = null;
@@ -10,7 +11,7 @@ class Navigation extends Renderable {
   constructor(renderContainer) {
     if (Navigation.instance) {
       throw new Error(
-        "Not possible to create the second instance of singleton class"
+        "Impossible to to create the second instance of singleton class"
       );
     }
 
@@ -26,14 +27,15 @@ class Navigation extends Renderable {
     this.#setContent();
     this.#setListeners();
 
+    this.game = new Game(renderContainer);
     this.authForm = new AuthForm(renderContainer);
     this.registrationForm = new RegistrationForm(renderContainer);
     this.animatedAuthForm = new FallAnimated(this.authForm);
     this.animatedRegistrationForm = new FallAnimated(this.registrationForm);
 
     this.componentContainer.append(
-      this.authButton,
       this.registrationButton,
+      this.authButton,
       this.startButton,
       this.closeButton
     );
@@ -69,11 +71,9 @@ class Navigation extends Renderable {
   }
 
   #setListeners() {
-    this.componentContainer.addEventListener("click", this.#onClick.bind(this));
-    NavButton.instance.componentContainer.addEventListener(
-      "click",
-      this.#onClick.bind(this)
-    );
+    const binded = this.#onClick.bind(this);
+    this.componentContainer.addEventListener("click", binded);
+    NavButton.instance.componentContainer.addEventListener("click", binded);
   }
 
   #setContent() {
@@ -93,6 +93,8 @@ class Navigation extends Renderable {
         NavButton.instance.animatedNavContainer.hide(() =>
           this.animatedAuthForm.render()
         );
+      } else if (target === this.startButton) {
+        this.game.start();
       } else {
         NavButton.instance.animatedNavContainer.hide();
       }

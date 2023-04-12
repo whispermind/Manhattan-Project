@@ -2,7 +2,6 @@
   width: 100vw;
   height: 100vh;
   position: relative;
-  background: url('../../assets/images/background.webp') no-repeat bottom center;
   background-color: var(--skyblue);
 }
 
@@ -12,5 +11,5 @@
   position: absolute;
   bottom: 0;
   z-index: 10;
-  background: url('../../assets/images/grass.webp') no-repeat bottom center;
+  background: url('../../assets/images/grass-overlay.webp') no-repeat bottom center;
 }

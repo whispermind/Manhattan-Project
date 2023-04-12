@@ -4,6 +4,7 @@
 @import "./forms.css";
 @import "./navigation.css";
 @import "./animation.css";
+@import "./game.css";
 
 * {
   box-sizing: border-box;

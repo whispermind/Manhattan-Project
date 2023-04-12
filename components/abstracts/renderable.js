@@ -1,9 +1,12 @@
+import isElement from "../../utils/is-html-element.js";
+
 class Renderable {
   _componentContainer = null;
+  _renderContainer = null;
 
   constructor(thisContainer) {
     if (this.constructor === Renderable) {
-      throw new Error("Cant create the instance of abstract class");
+      throw new Error("Impossible to create the instance of abstract class");
     }
 
     this.thisContainer = thisContainer;
@@ -14,11 +17,25 @@ class Renderable {
   }
 
   set componentContainer(container) {
+    if (!isElement(container)) {
+      throw new Error("Container must extend HTMLElement");
+    }
     return (this._componentContainer = container);
   }
 
+  get renderContainer() {
+    return this._renderContainer;
+  }
+
+  set renderContainer(container) {
+    if (!isElement(container)) {
+      throw new Error("Container must extend HTMLElement");
+    }
+    return (this._renderContainer = container);
+  }
+
   render() {
-    throw new Error("render method must be implemented");
+    throw new Error("Render method must be implemented");
   }
 
   hide() {

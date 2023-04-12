@@ -6,7 +6,7 @@ class App extends Renderable {
   constructor(renderContainer) {
     if (App.instance) {
       throw new Error(
-        "Not possible to create the second instance of singleton class"
+        "Impossible to to create the second instance of singleton class"
       );
     }
 
@@ -19,9 +19,8 @@ class App extends Renderable {
     this.#setLayout();
     this.#setAttributes();
 
-    this.navButton = new navButton(this.componentContainer);
-
     this.componentContainer.append(this.grassOverlay);
+    this.navButton = new navButton(this.componentContainer);
   }
 
   #setLayout() {

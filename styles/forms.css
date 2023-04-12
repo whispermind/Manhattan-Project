@@ -36,4 +36,5 @@ input[type="submit"] {
   width: var(--navs-containers-width);
   position: relative;
   left: calc(50vw - var(--navs-containers-width) / 2);
+  z-index: 10;
 }

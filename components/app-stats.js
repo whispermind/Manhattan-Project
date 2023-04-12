@@ -1,1 +1,3 @@
-class Stats{}
+class Stats{
+  
+}

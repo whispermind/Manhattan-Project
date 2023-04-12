@@ -10,12 +10,8 @@ class AuthForm extends AbstractUserForm {
   constructor(renderContainer) {
     if (AuthForm.instance) {
       throw new Error(
-        "Not possible to create the second instance of singleton class"
+        "Impossible to to create the second instance of singleton class"
       );
-    }
-
-    if (!renderContainer || !isElement(renderContainer)) {
-      throw new Error("Container arugment must be an HTML Element");
     }
 
     super();
@@ -42,10 +38,7 @@ class AuthForm extends AbstractUserForm {
   }
 
   #setListeners() {
-    this.componentContainer.addEventListener(
-      "submit",
-      this.#onSubmit.bind(this)
-    );
+    this.componentContainer.addEventListener("submit", this.#onSubmit);
   }
 
   #setContent() {
