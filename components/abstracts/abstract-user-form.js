@@ -12,7 +12,7 @@ class AbstractUserForm extends Renderable {
     super(form);
 
     if (this.constructor === AbstractUserForm) {
-      throw new Error("Impossible to to create the instance of abstract class");
+      throw new Error("Impossible to create the instance of abstract class");
     }
 
     this.componentContainer = form;

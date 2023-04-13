@@ -9,7 +9,8 @@
 * {
   box-sizing: border-box;
   scrollbar-width: none;
-  font-family: 'Londrina Solid', cursive;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.9rem;
 }
 
 body,
@@ -30,6 +31,7 @@ button {
   text-align: center;
   border: none;
   text-transform: capitalize;
+  padding: 5px;
 }
 
 button {

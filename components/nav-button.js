@@ -9,7 +9,7 @@ class NavButton extends Renderable {
   constructor(renderContainer) {
     if (NavButton.instance) {
       throw new Error(
-        "Impossible to to create the second instance of singleton class"
+        "Impossible to create the second instance of singleton class"
       );
     }
 

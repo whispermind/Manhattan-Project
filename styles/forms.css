@@ -29,6 +29,11 @@ input[type="submit"] {
   cursor: pointer;
   appearance: button;
   color: var(--placeholder);
+  transition: background-color 0.5s ease-in-out;
+}
+
+input[type="submit"]:hover {
+  background-color: var(--button-hover);
 }
 
 .form_auth,

@@ -10,7 +10,7 @@ class AuthForm extends AbstractUserForm {
   constructor(renderContainer) {
     if (AuthForm.instance) {
       throw new Error(
-        "Impossible to to create the second instance of singleton class"
+        "Impossible to create the second instance of singleton class"
       );
     }
 
@@ -56,9 +56,7 @@ class AuthForm extends AbstractUserForm {
           flag = true;
         }
       });
-    } catch (err) {
-      //unreachable w/o api
-    }
+    } catch (err) {}
     Navigation.instance.animatedAuthForm.hide(() =>
       Navigation.instance.render()
     );

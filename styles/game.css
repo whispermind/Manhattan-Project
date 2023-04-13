@@ -1,7 +1,7 @@
 .game__duck {
   position: absolute;
   transition-property: transform;
-  transition-timing-function: ease-in-out;
+  transition-timing-function: ease;
   z-index: 1;
 }
 
@@ -9,6 +9,6 @@
   width: 100px;
 }
 
-img[src="../assets/gifs/duck-cutted.gif"] {
+img[src="./assets/gifs/duck-cutted.gif"] {
   cursor: pointer;
 }

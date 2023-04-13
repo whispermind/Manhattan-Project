@@ -11,7 +11,7 @@ class Navigation extends Renderable {
   constructor(renderContainer) {
     if (Navigation.instance) {
       throw new Error(
-        "Impossible to to create the second instance of singleton class"
+        "Impossible to create the second instance of singleton class"
       );
     }
 
@@ -68,6 +68,10 @@ class Navigation extends Renderable {
       "navigation__button_close",
       "close-button"
     );
+    this.startButton.classList.add(
+      "navigation__button",
+      "navigation__button_start"
+    );
   }
 
   #setListeners() {
@@ -84,19 +88,16 @@ class Navigation extends Renderable {
 
   #onClick(e) {
     const target = e.target;
+    const { animatedNavContainer } = NavButton.instance;
     if (target.tagName === "BUTTON") {
       if (target === this.registrationButton) {
-        NavButton.instance.animatedNavContainer.hide(() =>
-          this.animatedRegistrationForm.render()
-        );
+        animatedNavContainer.hide(() => this.animatedRegistrationForm.render());
       } else if (target === this.authButton) {
-        NavButton.instance.animatedNavContainer.hide(() =>
-          this.animatedAuthForm.render()
-        );
+        animatedNavContainer.hide(() => this.animatedAuthForm.render());
       } else if (target === this.startButton) {
         this.game.start();
       } else {
-        NavButton.instance.animatedNavContainer.hide();
+        animatedNavContainer.hide();
       }
     }
   }

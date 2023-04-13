@@ -8,3 +8,11 @@
   z-index: 10;
   left: calc(50vw - var(--navs-containers-width) / 2);
 }
+
+.navigation button {
+  transition: background-color 0.5s ease-in-out;
+}
+
+.navigation button:not(:last-child):hover {
+  background-color: var(--button-hover);
+}

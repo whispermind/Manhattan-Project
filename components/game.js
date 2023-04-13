@@ -2,10 +2,12 @@ import App from "./app.js";
 import Duck from "./duck.js";
 import NavButton from "./nav-button.js";
 import randomBetween from "../utils/random-between.js";
+import Soundbar from "./soundbar.js";
 
 class Game {
   static instance = null;
 
+  reload = false;
   processed = false;
   totalWaves = 5;
   timeBetweenSpawns = 2.5;
@@ -14,7 +16,7 @@ class Game {
   constructor(renderContainer) {
     if (Game.instance) {
       throw new Error(
-        "Impossible to to create the second instance of singleton class"
+        "Impossible to create the second instance of singleton class"
       );
     }
 
@@ -45,6 +47,7 @@ class Game {
   async start() {
     if (this.processed) return;
     this.processed = true;
+    window.addEventListener("click", this.#onShot);
 
     while (this.currentWave < this.totalWaves && this.processed) {
       try {
@@ -52,7 +55,7 @@ class Game {
         this.#nextWave();
         this.spawns.length = 0;
       } catch (e) {
-        this.#onLose();
+        if (this.processed) this.#onLose();
       }
     }
 
@@ -60,9 +63,16 @@ class Game {
     if (this.processed) this.#onWin();
   }
 
+  stop() {
+    this.processed = false;
+    window.removeEventListener("click", this.#onShot);
+    this.spawns.forEach((spawn) => spawn.onClick());
+    this.#setDefaults();
+  }
+
   #startWave() {
     const duckStatuses = [];
-    for (let i = 0; i < this.spawnsPerWave; i++) {
+    for (let i = 1; i <= this.spawnsPerWave && this.processed; i++) {
       duckStatuses.push(
         new Promise((resolve, reject) => {
           const spawn = new Duck(this.renderContainer);
@@ -72,13 +82,22 @@ class Game {
           spawnContainer.style.left = `-${this.duckWidth}px`;
           this.spawns.push(spawn);
 
-          spawnContainer.addEventListener("click", () => resolve(), {
-            once: true,
-          });
+          spawnContainer.addEventListener(
+            "click",
+            () => {
+              if (this.reload) return;
+              resolve();
+            },
+            {
+              once: true,
+            }
+          );
 
           setTimeout(() => {
-            spawn.render();
-            spawn.move(randomBetween(this.minSpeed, this.maxSpeed), reject);
+            if (this.processed) {
+              spawn.render();
+              spawn.move(randomBetween(this.minSpeed, this.maxSpeed), reject);
+            }
           }, delay);
         })
       );
@@ -90,20 +109,19 @@ class Game {
     this.currentWave++;
     this.maxSpeed--;
     this.minSpeed++;
-    this.spawnsPerWave += 1;
-  }
-
-  stop() {
-    this.processed = false;
-    this.spawns.forEach((spawn) => spawn.onClick());
-    this.#setDefaults();
+    this.spawnsPerWave += 3;
+    const { huntedAnimation } = App.instance;
+    huntedAnimation.classList.add("app__animation_show");
+    Soundbar.play("bark", () => {
+      huntedAnimation.classList.remove("app__animation_show");
+    });
   }
 
   #setDefaults() {
-    this.maxSpeed = 7;
-    this.minSpeed = 10;
+    this.maxSpeed = 5;
+    this.minSpeed = 7;
     this.currentWave = 1;
-    this.spawnsPerWave = 3;
+    this.spawnsPerWave = 8;
   }
 
   #setListeners() {
@@ -113,12 +131,43 @@ class Game {
     );
   }
 
+  #onShot(e) {
+    const target = e.target;
+
+    if (
+      target === NavButton.instance.componentContainer ||
+      target.classList.contains("navigation__button_start")
+    ) {
+      return;
+    }
+
+    this.reload = true;
+
+    const { componentContainer } = App.instance;
+    componentContainer.classList.add("app_shot");
+    componentContainer.addEventListener(
+      "transitionend",
+      () => componentContainer.classList.remove("app_shot"),
+      { once: true }
+    );
+    Soundbar.play("shot", () => {
+      this.reload = false;
+    });
+  }
+
   #onWin() {
     this.stop();
+    Soundbar.play("win");
   }
 
   #onLose() {
     this.stop();
+    const { laughAnimation } = App.instance;
+    laughAnimation.classList.add("app__animation_show");
+    Soundbar.play("laugh", () => {
+      laughAnimation.classList.remove("app__animation_show");
+      Soundbar.play("lose");
+    });
   }
 }
 

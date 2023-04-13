@@ -1,9 +1,11 @@
 :root {
   --skyblue: #40c0ff;
+  --skyshot: #ffcdcd;
   --valid: #367d49;
   --invalid: #8c3140;
   --focused: #0b7cda;
   --placeholder: #8e8e8e;
+  --button-hover: #f2ddc3;
 
   --navs-containers-width: 300px;
   --nav-containers-height: 170px;

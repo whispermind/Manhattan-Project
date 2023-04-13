@@ -1,5 +1,4 @@
 import Renderable from "./abstracts/renderable.js";
-import App from "./app.js";
 import loadImage from "../utils/image-loader.js";
 import isRendered from "../utils/is-rendered.js";
 
@@ -26,7 +25,7 @@ class Duck extends Renderable {
   }
   #setAttributes() {
     this.componentContainer.classList.add("game__duck");
-    this.flyingDuck.src = "../assets/gifs/duck-cutted.gif";
+    this.flyingDuck.src = "./assets/gifs/duck-cutted.gif";
     this.flyingDuck.alt = "flying duck";
   }
 
@@ -37,7 +36,7 @@ class Duck extends Renderable {
   }
 
   move(time, cb) {
-    //the logic was replaced with transitions to prevent event loop hard traffic
+    //the logic was replaced with transitions to prevent event loop overloading. css animations also work better tho
     // this.interval = setInterval(() => {
     //   const width = this.componentContainer.offsetWidth;
     //   const currentPosition = parseInt(this.componentContainer.style.left);
@@ -56,7 +55,7 @@ class Duck extends Renderable {
   }
 
   onClick() {
-    const hittedGif = "../assets/gifs/duck-hitted.gif";
+    const hittedGif = "./assets/gifs/duck-hitted.gif";
     if (this.interval) clearInterval(this.interval);
     this.componentContainer.style.zIndex = 0;
     loadImage(hittedGif, () => {

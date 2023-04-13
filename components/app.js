@@ -6,7 +6,7 @@ class App extends Renderable {
   constructor(renderContainer) {
     if (App.instance) {
       throw new Error(
-        "Impossible to to create the second instance of singleton class"
+        "Impossible to create the second instance of singleton class"
       );
     }
 
@@ -19,16 +19,34 @@ class App extends Renderable {
     this.#setLayout();
     this.#setAttributes();
 
-    this.componentContainer.append(this.grassOverlay);
+    this.componentContainer.append(
+      this.grassOverlay,
+      this.treeOverlay,
+      this.laughAnimation,
+      this.huntedAnimation
+    );
+
     this.navButton = new navButton(this.componentContainer);
   }
 
   #setLayout() {
+    this.laughAnimation = document.createElement("img");
+    this.huntedAnimation = document.createElement("img");
+    this.treeOverlay = document.createElement("img");
     this.grassOverlay = document.createElement("div");
   }
 
   #setAttributes() {
     this.grassOverlay.classList.add("app__grass-overlay");
+    this.treeOverlay.classList.add("app__tree-overlay");
+    this.laughAnimation.classList.add("app__animation", "app__animation_laugh");
+    this.huntedAnimation.classList.add(
+      "app__animation",
+      "app__animation_hunted"
+    );
+    this.laughAnimation.src = "./assets/gifs/laugh.gif";
+    this.huntedAnimation.src = "./assets/images/hunted.webp";
+    this.treeOverlay.src = "./assets/images/tree-overlay.webp";
   }
 
   render() {

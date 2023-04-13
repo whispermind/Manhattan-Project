@@ -12,7 +12,7 @@ class RegistrationForm extends AbstractUserForm {
   constructor(renderContainer) {
     if (RegistrationForm.instance) {
       throw new Error(
-        "Impossible to to create the second instance of singleton class"
+        "Impossible to create the second instance of singleton class"
       );
     }
 
