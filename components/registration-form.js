@@ -22,12 +22,10 @@ class RegistrationForm extends AbstractUserForm {
 
     this.#setLayout();
     this.#setAttributes();
-    this.#setContent();
     this.#setListeners();
 
     this.componentContainer.append(
       this.closeButton,
-      this.formHeader,
       this.nameInput,
       this.emailInput,
       this.passwordInput,
@@ -54,16 +52,11 @@ class RegistrationForm extends AbstractUserForm {
     this.componentContainer.addEventListener("submit", this.#onSubmit);
   }
 
-  #setContent() {
-    this.formHeader.textContent = this.formHeadingText;
-  }
-
   async #onSubmit(e) {
     e.preventDefault();
     const [name, email, password] = e.target.elements;
     try {
-      const users = mainStorage.getItem();
-      mainStorage.setItem([...users, { name, email, password }]);
+      //undefined request logic
     } catch (err) {
       //unreachable w/o api
     }

@@ -2,6 +2,7 @@
   height: var(--nav-containers-height);
   transform: translateY(-150vh);
   animation: 1s ease forwards fall;
+  align-self: normal;
 }
 
 .fall-back-animation {
@@ -18,13 +19,13 @@
   }
 
   100% {
-    transform: translateY(calc(50vh - var(--nav-containers-height)));
+    transform: translateY(calc(50vh - var(--nav-containers-height) / 2));
   }
 }
 
 @keyframes fall-back {
   from {
-    transform: translateY(calc(50vh - var(--nav-containers-height)));
+    transform: translateY(calc(50vh - var(--nav-containers-height) / 2));
   }
 
   100% {

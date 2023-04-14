@@ -1,7 +1,7 @@
 import Renderable from "./abstracts/renderable.js";
 import AuthForm from "./authorization-form.js";
 import RegistrationForm from "./registration-form.js";
-import FallAnimated from "./fall-animated.js";
+import FallAnimated from "./wrappers/fall-animated.js";
 import NavButton from "./nav-button.js";
 import Game from "./game.js";
 
@@ -36,6 +36,7 @@ class Navigation extends Renderable {
     this.componentContainer.append(
       this.registrationButton,
       this.authButton,
+      this.logoutButton,
       this.startButton,
       this.closeButton
     );
@@ -45,6 +46,7 @@ class Navigation extends Renderable {
     const propNames = [
       "registrationButton",
       "authButton",
+      "logoutButton",
       "closeButton",
       "startButton",
     ];
@@ -72,6 +74,10 @@ class Navigation extends Renderable {
       "navigation__button",
       "navigation__button_start"
     );
+    this.logoutButton.classList.add(
+      "navigation_button",
+      "navigation__button_logout"
+    );
   }
 
   #setListeners() {
@@ -83,6 +89,7 @@ class Navigation extends Renderable {
   #setContent() {
     this.registrationButton.textContent = "Registration";
     this.authButton.textContent = "Log in";
+    this.logoutButton.textContent = "Log out";
     this.startButton.textContent = "Start";
   }
 

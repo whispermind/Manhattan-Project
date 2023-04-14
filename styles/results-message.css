@@ -1,0 +1,13 @@
+.result {
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 99;
+  font-size: 1rem;
+  height: 100px;
+  color: #fff;
+}
+
+.result__message {
+  margin: 0;
+}

@@ -1,5 +1,5 @@
-import Renderable from "./abstracts/renderable.js";
-import isRendered from "../utils/is-rendered.js";
+import Renderable from "../abstracts/renderable.js";
+import isRendered from "../../utils/is-rendered.js";
 
 class FallAnimated {
   #superHide = null;

@@ -20,10 +20,8 @@ class AuthForm extends AbstractUserForm {
     this.renderContainer = renderContainer;
 
     this.#setAttributes();
-    this.#setContent();
 
     this.componentContainer.append(
-      this.formHeader,
       this.emailInput,
       this.passwordInput,
       this.closeButton,
@@ -41,22 +39,14 @@ class AuthForm extends AbstractUserForm {
     this.componentContainer.addEventListener("submit", this.#onSubmit);
   }
 
-  #setContent() {
-    this.formHeader.textContent = this.formHeadingText;
-  }
-
   async #onSubmit(e) {
     e.preventDefault();
     const [email, password] = e.target.elements;
     try {
-      const users = mainStorage.get();
-      let flag = false;
-      users.forEach((user) => {
-        if (user.password === password && user.email === email) {
-          flag = true;
-        }
-      });
-    } catch (err) {}
+      //undefined request logic
+    } catch (err) {
+      //unreachable w/o api
+    }
     Navigation.instance.animatedAuthForm.hide(() =>
       Navigation.instance.render()
     );

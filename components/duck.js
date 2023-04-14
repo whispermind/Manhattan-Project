@@ -3,8 +3,6 @@ import loadImage from "../utils/image-loader.js";
 import isRendered from "../utils/is-rendered.js";
 
 class Duck extends Renderable {
-  //interval = null;
-
   constructor(renderContainer) {
     const componentContainer = document.createElement("div");
     super(componentContainer);
@@ -17,31 +15,25 @@ class Duck extends Renderable {
     this.#setAttributes();
     this.#setListeners();
 
-    this.componentContainer.append(this.flyingDuck);
+    this.componentContainer.append(this.duckImage);
   }
 
   #setLayout() {
-    this.flyingDuck = document.createElement("img");
+    this.duckImage = document.createElement("img");
   }
   #setAttributes() {
     this.componentContainer.classList.add("game__duck");
-    this.flyingDuck.src = "./assets/gifs/duck-cutted.gif";
-    this.flyingDuck.alt = "flying duck";
+    this.duckImage.src = "./assets/gifs/duck-cutted.gif";
+    this.duckImage.alt = "flying duck";
   }
 
   #setListeners() {
-    this.flyingDuck.addEventListener("click", this.onClick, {
+    this.duckImage.addEventListener("click", this.onClick, {
       once: true,
     });
   }
 
   move(time, cb) {
-    //the logic was replaced with transitions to prevent event loop overloading. css animations also work better tho
-    // this.interval = setInterval(() => {
-    //   const width = this.componentContainer.offsetWidth;
-    //   const currentPosition = parseInt(this.componentContainer.style.left);
-    //   this.componentContainer.style.left = `${currentPosition + step}px`;
-    // }, 100);
     const interval = setInterval(() => {
       if (isRendered(this.componentContainer)) {
         this.componentContainer.style.transitionDuration = `${time}s`;
@@ -60,7 +52,7 @@ class Duck extends Renderable {
     this.componentContainer.style.zIndex = 0;
     loadImage(hittedGif, () => {
       //TODO Fix safari gif transition issue, works well for chrome
-      this.flyingDuck.src = hittedGif;
+      this.duckImage.src = hittedGif;
       setTimeout(this.hide.bind(this), 1000);
     });
   }

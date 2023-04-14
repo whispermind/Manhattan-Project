@@ -1,7 +1,8 @@
 class AppState {
   authorization = {
     username: null,
-    logged: false,
+    token: null,
+    refreshToken: null,
   };
 }
 

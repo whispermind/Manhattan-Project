@@ -3,15 +3,16 @@ import Duck from "./duck.js";
 import NavButton from "./nav-button.js";
 import randomBetween from "../utils/random-between.js";
 import Soundbar from "./soundbar.js";
+import loadImage from "../utils/image-loader.js";
+import GameStatistic from "./game-statistic.js";
+import ResultsMessage from "./results-message.js";
 
 class Game {
   static instance = null;
 
-  reload = false;
-  processed = false;
-  totalWaves = 5;
-  timeBetweenSpawns = 2.5;
-  spawns = [];
+  #totalWaves = 5;
+  #timeBetweenSpawns = 1.5;
+  #spawns = [];
 
   constructor(renderContainer) {
     if (Game.instance) {
@@ -20,53 +21,64 @@ class Game {
       );
     }
 
-    this.instance = this;
+    Game.instance = this;
     this.renderContainer = renderContainer;
 
     const grassRect = App.instance.grassOverlay.getBoundingClientRect();
     const duck = new Duck(renderContainer);
-    const duckImage = duck.flyingDuck;
-    duck.render();
+    const duckImageSrc = duck.duckImage.src;
 
-    duckImage.addEventListener(
-      "load",
-      () => {
-        this.duckHeight = duck.componentContainer.offsetHeight;
-        this.duckWidth = duck.componentContainer.offsetWidth;
-        this.bottomEdge = grassRect.top - this.duckHeight;
-        duckImage.hidden = true;
-        duck.onClick();
-      },
-      { once: true }
-    );
+    loadImage(duckImageSrc, () => {
+      duck.render();
+      this.duckHeight = duck.componentContainer.offsetHeight;
+      this.duckWidth = duck.componentContainer.offsetWidth;
+      this.bottomEdge = grassRect.top - this.duckHeight;
+      duck.componentContainer.hidden = true;
+      duck.onClick();
+    });
 
     this.#setDefaults();
     this.#setListeners();
+
+    this.onShot = this.onShot.bind(this);
+    this.gameStats = new GameStatistic(renderContainer);
+    this.resultsMessage = new ResultsMessage(renderContainer);
   }
 
   async start() {
     if (this.processed) return;
     this.processed = true;
-    window.addEventListener("click", this.#onShot);
+    this.started = Date.now();
+    this.interval = setInterval(() => {
+      setInterval(() => {
+        const elapsedTime = Date.now() - this.started;
+        this.timer = (elapsedTime / 1000).toFixed(2);
+        this.gameStats.refresh();
+      }, 100);
+    });
+    window.addEventListener("click", this.onShot);
+    this.gameStats.render();
 
-    while (this.currentWave < this.totalWaves && this.processed) {
+    while (this.currentWave < this.#totalWaves && this.processed) {
       try {
         await this.#startWave();
         this.#nextWave();
-        this.spawns.length = 0;
+        this.#spawns.length = 0;
       } catch (e) {
         if (this.processed) this.#onLose();
       }
     }
 
-    this.spawns.length = 0;
+    this.#spawns.length = 0;
     if (this.processed) this.#onWin();
   }
 
   stop() {
     this.processed = false;
-    window.removeEventListener("click", this.#onShot);
-    this.spawns.forEach((spawn) => spawn.onClick());
+    if (this.interval) clearInterval(this.interval);
+    window.removeEventListener("click", this.onShot);
+    this.#spawns.forEach((spawn) => spawn.onClick());
+    this.gameStats.hide();
     this.#setDefaults();
   }
 
@@ -77,15 +89,15 @@ class Game {
         new Promise((resolve, reject) => {
           const spawn = new Duck(this.renderContainer);
           const spawnContainer = spawn.componentContainer;
-          const delay = 1000 * this.timeBetweenSpawns * i;
+          const delay = 1000 * this.#timeBetweenSpawns * i;
           spawnContainer.style.top = `${randomBetween(0, this.bottomEdge)}px`;
           spawnContainer.style.left = `-${this.duckWidth}px`;
-          this.spawns.push(spawn);
+          this.#spawns.push(spawn);
 
           spawnContainer.addEventListener(
             "click",
             () => {
-              if (this.reload) return;
+              this.hits++;
               resolve();
             },
             {
@@ -109,7 +121,7 @@ class Game {
     this.currentWave++;
     this.maxSpeed--;
     this.minSpeed++;
-    this.spawnsPerWave += 3;
+    this.spawnsPerWave += 1;
     const { huntedAnimation } = App.instance;
     huntedAnimation.classList.add("app__animation_show");
     Soundbar.play("bark", () => {
@@ -121,22 +133,25 @@ class Game {
     this.maxSpeed = 5;
     this.minSpeed = 7;
     this.currentWave = 1;
-    this.spawnsPerWave = 8;
+    this.spawnsPerWave = 3;
+    this.shots = 0;
+    this.hits = 0;
   }
 
   #setListeners() {
-    NavButton.instance.componentContainer.addEventListener(
-      "click",
-      this.stop.bind(this)
-    );
+    NavButton.instance.componentContainer.addEventListener("click", () => {
+      this.stop();
+      this.resultsMessage.hide();
+    });
   }
 
-  #onShot(e) {
+  onShot(e) {
     const target = e.target;
 
     if (
       target === NavButton.instance.componentContainer ||
-      target.classList.contains("navigation__button_start")
+      target.classList.contains("navigation__button_start") ||
+      this.reload
     ) {
       return;
     }
@@ -153,17 +168,24 @@ class Game {
     Soundbar.play("shot", () => {
       this.reload = false;
     });
+    this.shots++;
   }
 
   #onWin() {
+    this.win = true;
+    this.resultsMessage.refresh();
+    this.resultsMessage.render();
     this.stop();
     Soundbar.play("win");
   }
 
   #onLose() {
-    this.stop();
+    this.win = false;
     const { laughAnimation } = App.instance;
     laughAnimation.classList.add("app__animation_show");
+    this.resultsMessage.refresh();
+    this.resultsMessage.render();
+    this.stop();
     Soundbar.play("laugh", () => {
       laughAnimation.classList.remove("app__animation_show");
       Soundbar.play("lose");

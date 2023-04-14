@@ -4,6 +4,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
+  font-size: 0.9rem;
 }
 
 .form input:focus::placeholder {
@@ -40,6 +41,5 @@ input[type="submit"]:hover {
 .form_registration {
   width: var(--navs-containers-width);
   position: relative;
-  left: calc(50vw - var(--navs-containers-width) / 2);
   z-index: 10;
 }
