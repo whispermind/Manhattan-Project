@@ -1,5 +1,5 @@
 import Renderable from "./abstracts/renderable.js";
-import navButton from "./nav-button.js";
+import navButton from "./navs/nav-button.js";
 
 class App extends Renderable {
   static instance = null;
@@ -44,6 +44,7 @@ class App extends Renderable {
       "app__animation",
       "app__animation_hunted"
     );
+
     this.laughAnimation.src = "./assets/gifs/laugh.gif";
     this.huntedAnimation.src = "./assets/images/hunted.webp";
     this.treeOverlay.src = "./assets/images/tree-overlay.webp";

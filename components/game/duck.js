@@ -1,14 +1,15 @@
-import Renderable from "./abstracts/renderable.js";
-import loadImage from "../utils/image-loader.js";
-import isRendered from "../utils/is-rendered.js";
+import Renderable from "../abstracts/renderable.js";
+import loadImage from "../../utils/image-loader.js";
+import isRendered from "../../utils/is-rendered.js";
 
+//The game clickable-item
 class Duck extends Renderable {
   constructor(renderContainer) {
     const componentContainer = document.createElement("div");
     super(componentContainer);
 
-    this.renderContainer = renderContainer;
     this.componentContainer = componentContainer;
+    this.renderContainer = renderContainer;
     this.onClick = this.onClick.bind(this);
 
     this.#setLayout();
@@ -33,22 +34,23 @@ class Duck extends Renderable {
     });
   }
 
+  //event starter, game ends with lose event when item reach the right edge of the screen
   move(time, cb) {
     const interval = setInterval(() => {
       if (isRendered(this.componentContainer)) {
+        clearInterval(interval);
         this.componentContainer.style.transitionDuration = `${time}s`;
         this.componentContainer.style.transform = `translateX(100vw)`;
-        this.componentContainer.addEventListener("transitionend", () => cb(), {
+        this.componentContainer.addEventListener("transitionend", cb, {
           once: true,
         });
-        clearInterval(interval);
       }
     }, 100);
   }
 
+  //item resolves on click event through the callback
   onClick() {
     const hittedGif = "./assets/gifs/duck-hitted.gif";
-    if (this.interval) clearInterval(this.interval);
     this.componentContainer.style.zIndex = 0;
     loadImage(hittedGif, () => {
       //TODO Fix safari gif transition issue, works well for chrome

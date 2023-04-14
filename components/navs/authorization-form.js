@@ -1,7 +1,5 @@
-import AbstractUserForm from "./abstracts/abstract-user-form.js";
-import isElement from "../utils/is-html-element.js";
+import AbstractUserForm from "../abstracts/abstract-user-form.js";
 import Navigation from "./navigation.js";
-import { mainStorage } from "../index.js";
 
 class AuthForm extends AbstractUserForm {
   formHeadingText = "Authorization";

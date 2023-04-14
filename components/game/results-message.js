@@ -1,4 +1,4 @@
-import Renderable from "./abstracts/renderable.js";
+import Renderable from "../abstracts/renderable.js";
 import Game from "./game.js";
 
 class ResultsMessage extends Renderable {
@@ -7,9 +7,9 @@ class ResultsMessage extends Renderable {
     super(componentContainer);
     ResultsMessage.instance = this;
 
-    this.renderContainer = renderContainer;
     this.componentContainer = componentContainer;
-
+    this.renderContainer = renderContainer;
+    
     this.#setLayout();
     this.#setAttributes();
     this.#setListeners();
@@ -17,6 +17,7 @@ class ResultsMessage extends Renderable {
     this.componentContainer.append(this.message, this.closeButton);
   }
 
+  //update message according to the current game state
   refresh() {
     const { win, hits, timer, currentWave } = Game.instance;
     const onWin = `Congratulations, you got ${hits} ducks in ${timer} seconds`;

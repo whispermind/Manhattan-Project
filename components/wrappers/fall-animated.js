@@ -1,6 +1,7 @@
 import Renderable from "../abstracts/renderable.js";
 import isRendered from "../../utils/is-rendered.js";
 
+//Class-wrapper to animate Renderable objects
 class FallAnimated {
   #superHide = null;
   #superRender = null;

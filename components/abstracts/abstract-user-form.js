@@ -1,8 +1,8 @@
 import Renderable from "./renderable.js";
+import Navigation from "../navs/navigation.js";
+import NavButton from "../navs/nav-button.js";
+import AuthForm from "../navs/authorization-form.js";
 import inputsFactory from "../../utils/inputs-factory.js";
-import Navigation from "../navigation.js";
-import NavButton from "../nav-button.js";
-import AuthForm from "../authorization-form.js";
 
 class AbstractUserForm extends Renderable {
   closeListeners = [];
@@ -21,6 +21,8 @@ class AbstractUserForm extends Renderable {
     this.#setAttributes();
     this.#setContent();
 
+    //navButton-object doesnt exist when constructor beign called
+    //awaiting for the object creation by using microtask
     queueMicrotask(this.#setListeners.bind(this));
   }
 

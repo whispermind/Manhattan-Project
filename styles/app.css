@@ -19,7 +19,7 @@
   position: absolute;
   bottom: 0;
   z-index: 10;
-  background: url('../assets/images/grass-overlay.webp') no-repeat bottom center;
+  background: url('../assets/images/grass-overlay.webp') bottom center;
 }
 
 .app__tree-overlay {

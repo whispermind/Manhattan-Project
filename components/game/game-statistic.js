@@ -1,6 +1,6 @@
-import Renderable from "./abstracts/renderable.js";
+import Renderable from "../abstracts/renderable.js";
 import Game from "./game.js";
-import appState from "./app-state.js";
+import appState from "../app-state.js";
 
 class GameStatistic extends Renderable {
   static instance = null;
@@ -16,8 +16,8 @@ class GameStatistic extends Renderable {
     super(componentContainer);
     GameStatistic.instance = this;
 
-    this.renderContainer = renderContainer;
     this.componentContainer = componentContainer;
+    this.renderContainer = renderContainer;
 
     this.#setLayout();
     this.#setAttributes();
@@ -30,6 +30,8 @@ class GameStatistic extends Renderable {
     );
   }
 
+  //update displaying stats according to the current game state
+  //calling by the interval from game.js module
   refresh() {
     const { shots, hits, timer, currentWave } = Game.instance;
     this.username.textContent = `${

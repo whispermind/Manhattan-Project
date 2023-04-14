@@ -1,3 +1,6 @@
+@import "./game-stats.css";
+@import "./results-message.css";
+
 .game__duck {
   position: absolute;
   transition-property: transform;

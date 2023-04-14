@@ -1,3 +1,7 @@
+@import "./animation.css";
+@import "./buttons.css";
+@import "./forms.css";
+
 .navigation {
   width: var(--navs-containers-width);
   display: flex;

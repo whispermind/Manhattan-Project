@@ -1,9 +1,6 @@
-import AbstractUserForm from "./abstracts/abstract-user-form.js";
-import inputsFactory from "../utils/inputs-factory.js";
-import isElement from "../utils/is-html-element.js";
-import NavButton from "./nav-button.js";
+import AbstractUserForm from "../abstracts/abstract-user-form.js";
+import inputsFactory from "../../utils/inputs-factory.js";
 import Navigation from "./navigation.js";
-import { mainStorage } from "../index.js";
 
 class RegistrationForm extends AbstractUserForm {
   formHeadingText = "Registration";

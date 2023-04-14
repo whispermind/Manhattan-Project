@@ -1,12 +1,7 @@
 @import "./vars.css";
 @import "./app.css";
-@import "./buttons.css";
-@import "./forms.css";
-@import "./navigation.css";
-@import "./animation.css";
-@import "./game.css";
-@import "./game-stats.css";
-@import "./results-message.css";
+@import "./navs/navigation.css";
+@import "./game/game.css";
 
 * {
   box-sizing: border-box;
@@ -27,12 +22,12 @@ h6 {
 input,
 button {
   width: 100%;
+  padding: 5px;
   border-radius: 5px;
   background-color: white;
   text-align: center;
   border: none;
   text-transform: capitalize;
-  padding: 5px;
 }
 
 button {

@@ -1,9 +1,9 @@
-import Renderable from "./abstracts/renderable.js";
+import Renderable from "../abstracts/renderable.js";
 import AuthForm from "./authorization-form.js";
 import RegistrationForm from "./registration-form.js";
-import FallAnimated from "./wrappers/fall-animated.js";
+import FallAnimated from "../wrappers/fall-animated.js";
 import NavButton from "./nav-button.js";
-import Game from "./game.js";
+import Game from "../game/game.js";
 
 class Navigation extends Renderable {
   static instance = null;

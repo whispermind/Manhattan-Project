@@ -1,11 +1,11 @@
-import App from "./app.js";
+import App from "../app.js";
 import Duck from "./duck.js";
-import NavButton from "./nav-button.js";
-import randomBetween from "../utils/random-between.js";
+import NavButton from "../navs/nav-button.js";
 import Soundbar from "./soundbar.js";
-import loadImage from "../utils/image-loader.js";
 import GameStatistic from "./game-statistic.js";
 import ResultsMessage from "./results-message.js";
+import randomBetween from "../../utils/random-between.js";
+import loadImage from "../../utils/image-loader.js";
 
 class Game {
   static instance = null;
@@ -23,6 +23,7 @@ class Game {
 
     Game.instance = this;
     this.renderContainer = renderContainer;
+    this.onShot = this.onShot.bind(this);
 
     const grassRect = App.instance.grassOverlay.getBoundingClientRect();
     const duck = new Duck(renderContainer);
@@ -40,11 +41,13 @@ class Game {
     this.#setDefaults();
     this.#setListeners();
 
-    this.onShot = this.onShot.bind(this);
     this.gameStats = new GameStatistic(renderContainer);
     this.resultsMessage = new ResultsMessage(renderContainer);
   }
 
+  //spawns game-waves, await until the current wave game-items will be resolved before spawn next one
+  //rejects on the transitionend event, resolves on the click event
+  //game ends with onLose event if rejected, and onWin event if all the waves were resolved
   async start() {
     if (this.processed) return;
     this.processed = true;
@@ -82,6 +85,8 @@ class Game {
     this.#setDefaults();
   }
 
+  // spawns game-items promises which resolves/rejects on click/transitionend events,
+  // returns an array of promises for the current wave
   #startWave() {
     const duckStatuses = [];
     for (let i = 1; i <= this.spawnsPerWave && this.processed; i++) {

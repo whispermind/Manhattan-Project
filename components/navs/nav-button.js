@@ -1,6 +1,6 @@
-import isRendered from "../utils/is-rendered.js";
-import Renderable from "./abstracts/renderable.js";
-import FallAnimated from "./wrappers/fall-animated.js";
+import isRendered from "../../utils/is-rendered.js";
+import Renderable from "../abstracts/renderable.js";
+import FallAnimated from "../wrappers/fall-animated.js";
 import Navigation from "./navigation.js";
 
 class NavButton extends Renderable {

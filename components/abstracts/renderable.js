@@ -1,5 +1,6 @@
 import isElement from "../../utils/is-html-element.js";
 
+//Using by all the renderable classes of the app
 class Renderable {
   _componentContainer = null;
   _renderContainer = null;
