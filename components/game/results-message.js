@@ -9,12 +9,11 @@ class ResultsMessage extends Renderable {
 
     this.componentContainer = componentContainer;
     this.renderContainer = renderContainer;
-    
+
     this.#setLayout();
     this.#setAttributes();
-    this.#setListeners();
 
-    this.componentContainer.append(this.message, this.closeButton);
+    this.componentContainer.append(this.message);
   }
 
   //update message according to the current game state
@@ -26,18 +25,12 @@ class ResultsMessage extends Renderable {
   }
 
   #setLayout() {
-    this.closeButton = document.createElement("button");
     this.message = document.createElement("p");
   }
 
   #setAttributes() {
     this.componentContainer.classList.add("result");
-    this.closeButton.classList.add("result__close-button", "close-button");
     this.message.classList.add("result__message");
-  }
-
-  #setListeners() {
-    this.closeButton.addEventListener("click", this.hide.bind(this));
   }
 
   render() {

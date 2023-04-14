@@ -4,7 +4,7 @@
   position: absolute;
   top: 0;
   right: 0;
-  background: url('../../assets/icons/close-icon.png');
+  background: url('../../assets/icons/close-icon.webp');
   background-size: cover;
 }
 
@@ -15,6 +15,6 @@
   bottom: 0;
   left: 30px;
   z-index: 10;
-  background: url('../../assets/icons/nav-icon.png');
+  background: url('../../assets/icons/nav-icon.webp');
   background-size: cover;
 }
