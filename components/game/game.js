@@ -50,8 +50,10 @@ class Game {
   //game ends with onLose event if rejected, and onWin event if all the waves were resolved
   async start() {
     if (this.processed) return;
+
     this.processed = true;
     this.started = Date.now();
+
     this.interval = setInterval(() => {
       setInterval(() => {
         const elapsedTime = Date.now() - this.started;
@@ -59,6 +61,7 @@ class Game {
         this.gameStats.refresh();
       }, 100);
     });
+
     window.addEventListener("click", this.onShot);
     this.gameStats.render();
 
@@ -78,7 +81,9 @@ class Game {
 
   stop() {
     this.processed = false;
+
     if (this.interval) clearInterval(this.interval);
+
     window.removeEventListener("click", this.onShot);
     this.#spawns.forEach((spawn) => spawn.onClick());
     this.gameStats.hide();
@@ -89,14 +94,17 @@ class Game {
   // returns an array of promises for the current wave
   #startWave() {
     const duckStatuses = [];
+
     for (let i = 1; i <= this.spawnsPerWave && this.processed; i++) {
       duckStatuses.push(
         new Promise((resolve, reject) => {
           const spawn = new Duck(this.renderContainer);
           const spawnContainer = spawn.componentContainer;
           const delay = 1000 * this.#timeBetweenSpawns * i;
+
           spawnContainer.style.top = `${randomBetween(0, this.bottomEdge)}px`;
           spawnContainer.style.left = `-${this.duckWidth}px`;
+
           this.#spawns.push(spawn);
 
           spawnContainer.addEventListener(
@@ -127,7 +135,9 @@ class Game {
     this.maxSpeed--;
     this.minSpeed++;
     this.spawnsPerWave += 1;
+
     const { huntedAnimation } = App.instance;
+
     huntedAnimation.classList.add("app__animation_show");
     Soundbar.play("bark", () => {
       huntedAnimation.classList.remove("app__animation_show");
@@ -165,11 +175,13 @@ class Game {
 
     const { componentContainer } = App.instance;
     componentContainer.classList.add("app_shot");
+
     componentContainer.addEventListener(
       "transitionend",
       () => componentContainer.classList.remove("app_shot"),
       { once: true }
     );
+
     Soundbar.play("shot", () => {
       this.reload = false;
     });
@@ -178,19 +190,25 @@ class Game {
 
   #onWin() {
     this.win = true;
+
     this.resultsMessage.refresh();
     this.resultsMessage.render();
     this.stop();
+
     Soundbar.play("win");
   }
 
   #onLose() {
-    this.win = false;
     const { laughAnimation } = App.instance;
+
+    this.win = false;
+
     laughAnimation.classList.add("app__animation_show");
+
     this.resultsMessage.refresh();
     this.resultsMessage.render();
     this.stop();
+
     Soundbar.play("laugh", () => {
       laughAnimation.classList.remove("app__animation_show");
       Soundbar.play("lose");

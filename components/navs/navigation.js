@@ -50,6 +50,7 @@ class Navigation extends Renderable {
       "closeButton",
       "startButton",
     ];
+
     propNames.forEach(
       (prop) => (this[prop] = document.createElement("button"))
     );

@@ -51,12 +51,15 @@ class RegistrationForm extends AbstractUserForm {
 
   async #onSubmit(e) {
     e.preventDefault();
+
     const [name, email, password] = e.target.elements;
+
     try {
       //undefined request logic
     } catch (err) {
       //unreachable w/o api
     }
+
     Navigation.instance.animatedRegistrationForm.hide(() =>
       Navigation.instance.render()
     );

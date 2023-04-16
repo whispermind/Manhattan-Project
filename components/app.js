@@ -3,6 +3,7 @@ import navButton from "./navs/nav-button.js";
 
 class App extends Renderable {
   static instance = null;
+
   constructor(renderContainer) {
     if (App.instance) {
       throw new Error(

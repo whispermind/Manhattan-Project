@@ -43,12 +43,14 @@ class AbstractUserForm extends Renderable {
   #setLayout() {
     this.formHeader = document.createElement("h2");
     this.closeButton = document.createElement("button");
+
     this.emailInput = inputsFactory({
       type: "email",
       name: "email",
       placeholder: "email",
       required: true,
     });
+
     this.passwordInput = inputsFactory({
       type: "password",
       name: "password",
@@ -57,6 +59,7 @@ class AbstractUserForm extends Renderable {
       maxlength: 16,
       required: true,
     });
+
     this.submitInput = inputsFactory({ type: "submit", value: "Submit" });
   }
 
@@ -73,6 +76,7 @@ class AbstractUserForm extends Renderable {
   #setListeners() {
     const binded = this.#onClick.bind(this);
     this.closeButton.addEventListener("click", binded);
+
     NavButton.instance.componentContainer.addEventListener("click", binded);
   }
 
@@ -88,9 +92,11 @@ class AbstractUserForm extends Renderable {
       this instanceof AuthForm
         ? "animatedAuthForm"
         : "animatedRegistrationForm";
+
     if (target === NavButton.instance.componentContainer) {
       Navigation.instance[method].hide(() => Navigation.instance.render());
     }
+
     if (target === this.closeButton) {
       Navigation.instance[method].hide();
     }

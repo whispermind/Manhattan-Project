@@ -13,15 +13,19 @@ class FallAnimated {
 
     this.componentContainer = instance.componentContainer;
     this.componentContainer.classList.add("fall-animation");
+
     this.#superHide = instance.hide.bind(instance);
     this.#superRender = instance.render.bind(instance);
+
     this.throttle = false;
   }
 
   hide(cb) {
     if (!isRendered(this.componentContainer)) return;
+
     this.throttle = true;
     this.componentContainer.classList.add("fall-back-animation");
+
     this.componentContainer.addEventListener(
       "animationend",
       () => {

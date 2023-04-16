@@ -39,12 +39,15 @@ class AuthForm extends AbstractUserForm {
 
   async #onSubmit(e) {
     e.preventDefault();
+
     const [email, password] = e.target.elements;
+
     try {
       //undefined request logic
     } catch (err) {
       //unreachable w/o api
     }
+
     Navigation.instance.animatedAuthForm.hide(() =>
       Navigation.instance.render()
     );

@@ -34,6 +34,7 @@ class GameStatistic extends Renderable {
   //calling by the interval from game.js module
   refresh() {
     const { shots, hits, timer, currentWave } = Game.instance;
+
     this.username.textContent = `${
       appState.authorization.username || "Guest"
     } stats:`;

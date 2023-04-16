@@ -39,6 +39,7 @@ class NavButton extends Renderable {
 
   #onClick(e) {
     const target = e.target;
+
     if (target.tagName === "BUTTON" && target !== this.componentContainer) {
       this.animatedNavContainer.hide();
     } else if (target === this.componentContainer) {

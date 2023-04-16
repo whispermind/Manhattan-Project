@@ -19,8 +19,10 @@ class ResultsMessage extends Renderable {
   //update message according to the current game state
   refresh() {
     const { win, hits, timer, currentWave } = Game.instance;
+
     const onWin = `Congratulations, you got ${hits} ducks in ${timer} seconds`;
     const onLose = `Unfortunately u couldnt handle the wave ${currentWave}, have a better luck next time`;
+
     this.message.textContent = win ? onWin : onLose;
   }
 

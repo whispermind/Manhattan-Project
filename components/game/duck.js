@@ -22,6 +22,7 @@ class Duck extends Renderable {
   #setLayout() {
     this.duckImage = document.createElement("img");
   }
+
   #setAttributes() {
     this.componentContainer.classList.add("game__duck");
     this.duckImage.src = "./assets/gifs/duck-cutted.gif";
@@ -34,7 +35,7 @@ class Duck extends Renderable {
     });
   }
 
-  //event starter, game ends with lose event when item reach the right edge of the screen
+  //event starter, game ends with lose event when item reach the right edge of the screen, rejects through cb
   move(time, cb) {
     const interval = setInterval(() => {
       if (isRendered(this.componentContainer)) {
@@ -48,14 +49,15 @@ class Duck extends Renderable {
     }, 100);
   }
 
-  //item resolves on click event through the callback
+  //displaying onclick animation, item resolves through another listener in game.js module
   onClick() {
     const hittedGif = "./assets/gifs/duck-hitted.gif";
     this.componentContainer.style.zIndex = 0;
+
     loadImage(hittedGif, () => {
       //TODO Fix safari gif transition issue, works well for chrome
       this.duckImage.src = hittedGif;
-      setTimeout(this.hide.bind(this), 1000);
+      setTimeout(this.hide.bind(this), 700);
     });
   }
 

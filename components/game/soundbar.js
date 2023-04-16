@@ -8,6 +8,7 @@ class Soundbar {
 
   play(sound, cb) {
     if (!this.sounds.includes(sound)) return;
+
     this[sound].play();
     this[sound].addEventListener("ended", cb, { once: true });
   }
